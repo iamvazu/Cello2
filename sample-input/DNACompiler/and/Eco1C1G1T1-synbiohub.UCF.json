@@ -6068,6 +6068,66 @@
 	"strength": 113.76
   },
   {
+	"collection": "ribozymes",
+	"name": "BydvJ",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "SarJ",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ57",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ54",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ51",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "ElvJ",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "PlmJ",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ64",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ53",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ60",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "ScmJ",
+	"efficiency": 0.95
+  },
+  {
+	"collection": "ribozymes",
+	"name": "RiboJ10",
+	"efficiency": 0.95
+  },
+  {
     "collection": "PartitionProfile",
     "PartitionProfile":
     {
