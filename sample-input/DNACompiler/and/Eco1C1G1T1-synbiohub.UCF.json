@@ -6003,6 +6003,71 @@
     "promoter": "pSrpR"
   },
   {
+	"collection": "terminators",
+	"name": "ECK120010818",
+	"strength": 148.26
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120010876",
+	"strength": 97.42
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120015440",
+	"strength": 119.21
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120016170",
+	"strength": 85.78
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120019600",
+	"strength": 378.38
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120029600",
+	"strength": 378.38
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120033736",
+	"strength": 164.60
+  },
+  {
+	"collection": "terminators",
+	"name": "ECK120033737",
+	"strength": 312.50
+  },
+  {
+	"collection": "terminators",
+	"name": "L3S2P11",
+	"strength": 261.55
+  },
+  {
+	"collection": "terminators",
+	"name": "L3S2P24",
+	"strength": 151.16
+  },
+  {
+	"collection": "terminators",
+	"name": "L3S2P55",
+	"strength": 255.66
+  },
+  {
+	"collection": "terminators",
+	"name": "L3S3P11",
+	"strength": 172.60
+  },
+  {
+	"collection": "terminators",
+	"name": "L3S3P31",
+	"strength": 113.76
+  },
+  {
     "collection": "PartitionProfile",
     "PartitionProfile":
     {
