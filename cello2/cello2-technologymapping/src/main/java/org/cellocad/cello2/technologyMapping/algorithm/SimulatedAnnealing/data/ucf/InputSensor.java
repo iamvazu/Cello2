@@ -20,7 +20,9 @@
  */
 package org.cellocad.cello2.technologyMapping.algorithm.SimulatedAnnealing.data.ucf;
 
+import org.cellocad.cello2.common.CObjectCollection;
 import org.cellocad.cello2.common.profile.ProfileUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -43,21 +45,20 @@ public class InputSensor extends Assignable{
 		this.setPromoter(value);
 	}
 	
-	private void parseLowSignal(final JSONObject JObj){
-		Double value = ((Number)JObj.get("signal_low")).doubleValue();
-		this.setLowSignal(value);
-	}
-	
-	private void parseHighSignal(final JSONObject JObj){
-		Double value = ((Number)JObj.get("signal_high")).doubleValue();
-		this.setHighSignal(value);
+	private void parseParameters(final JSONObject JObj) {
+		CObjectCollection<Parameter> parameters = this.getParameters();
+		JSONArray jArr = (JSONArray) JObj.get("parameters");
+		for (int i = 0; i < jArr.size(); i++) {
+			JSONObject jObj = (JSONObject) jArr.get(i);
+			Parameter parameter = new Parameter(jObj);
+			parameters.add(parameter);
+		}
 	}
 	
 	private void parseInputSensor(final JSONObject jObj) {
 		this.parseName(jObj);
 		this.parsePromoter(jObj);
-		this.parseLowSignal(jObj);
-		this.parseHighSignal(jObj);
+		this.parseParameters(jObj);
 	}
 	
 	public InputSensor(final JSONObject jObj) {
@@ -69,8 +70,7 @@ public class InputSensor extends Assignable{
 		boolean rtn = super.isValid();
 		rtn = rtn && (this.getName() != null);
 		rtn = rtn && (this.getPromoter() != null);
-		rtn = rtn && (this.getLowSignal() != null);
-		rtn = rtn && (this.getHighSignal() != null);
+		rtn = rtn && (this.getParameters() != null);
 		return rtn;
 	}
 	
@@ -96,45 +96,32 @@ public class InputSensor extends Assignable{
 	private String promoter;
 	
 	/*
-	 * Low Signal
+	 * Parameter
 	 */
-	/**
-	 * Getter for <i>lowSignal</i>
-	 * @return the lowSignal
-	 */
-	public Double getLowSignal() {
-		return lowSignal;
+	public Parameter getParameterValueByName(final String name) {
+		return this.getParameters().findCObjectByName(name);
 	}
-
-	/**
-	 * Setter for <i>lowSignal</i>
-	 * @param promoter the promoter to set
-	 */
-	private void setLowSignal(final Double lowSignal) {
-		this.lowSignal = lowSignal;
-	}
-
-	private Double lowSignal;
 	
-	/*
-	 * High Signal
-	 */
-	/**
-	 * Getter for <i>highSignal</i>
-	 * @return the highSignal
-	 */
-	public Double getHighSignal() {
-		return highSignal;
+	public Parameter getParameterAtIdx(final int index){
+		Parameter rtn = null;
+		if (
+				(0 <= index)
+				&&
+				(index < this.getNumParameter())
+				) {
+			rtn = this.getParameters().get(index);
+		}
+		return rtn;
 	}
-
-	/**
-	 * Setter for <i>highSignal</i>
-	 * @param promoter the promoter to set
-	 */
-	private void setHighSignal(final Double highSignal) {
-		this.highSignal = highSignal;
-	}
-
-	private Double highSignal;
 	
+	public int getNumParameter(){
+		return this.getParameters().size();
+	}
+	
+	private CObjectCollection<Parameter> getParameters(){
+		return this.parameters;
+	}
+	
+	private CObjectCollection<Parameter> parameters;
+
 }

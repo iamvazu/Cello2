@@ -32,7 +32,7 @@ import org.json.simple.JSONObject;
  * @date 2018-07-19
  *
  */
-public class ResponseFunctionParameter extends CObject{
+public class Parameter extends CObject{
 	
 	private void parseName(final JSONObject JObj){
 		String value = ProfileUtils.getString(JObj, "name");
@@ -45,7 +45,7 @@ public class ResponseFunctionParameter extends CObject{
 	}
 
 		
-	private void parseResponseFunctionParameter(final JSONObject jObj) {
+	private void parseParameter(final JSONObject jObj) {
 		this.parseName(jObj);
 		this.parseValue(jObj);
     }
@@ -53,9 +53,9 @@ public class ResponseFunctionParameter extends CObject{
 	private void init() {
 	}
 	
-	public ResponseFunctionParameter(final JSONObject jobj) {
+	public Parameter(final JSONObject jobj) {
 		this.init();
-		this.parseResponseFunctionParameter(jobj);
+		this.parseParameter(jobj);
 	}
 	
 	/*

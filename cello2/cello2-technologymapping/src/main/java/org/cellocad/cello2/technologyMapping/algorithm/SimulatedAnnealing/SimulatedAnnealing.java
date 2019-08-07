@@ -590,8 +590,8 @@ public class SimulatedAnnealing extends TMAlgorithm{
 		for (int i = 0; i < inputs.size(); i++) {
 			NetlistNode node = inputs.get(i);
 			InputSensor sensor = (InputSensor) this.getSimulatedAnnealingNetlistNodeData(node).getGate();
-			signals.setHighActivitySignal(node, sensor.getHighSignal());
-			signals.setLowActivitySignal(node, sensor.getLowSignal());
+			signals.setHighActivitySignal(node, sensor.getParameterValueByName("signal_high").getValue());
+			signals.setLowActivitySignal(node, sensor.getParameterValueByName("signal_low").getValue());
 		}
 		this.signals = signals;
 	}
