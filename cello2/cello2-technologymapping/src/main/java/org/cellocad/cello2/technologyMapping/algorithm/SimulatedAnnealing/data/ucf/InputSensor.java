@@ -35,6 +35,10 @@ import org.json.simple.JSONObject;
  */
 public class InputSensor extends Assignable{
 	
+	private void init() {
+		this.parameters = new CObjectCollection<Parameter>();
+	}
+	
 	private void parseName(final JSONObject JObj){
 		String value = ProfileUtils.getString(JObj, "name");
 		this.setName(value);
@@ -62,6 +66,7 @@ public class InputSensor extends Assignable{
 	}
 	
 	public InputSensor(final JSONObject jObj) {
+		this.init();
 		this.parseInputSensor(jObj);
 	}
 	

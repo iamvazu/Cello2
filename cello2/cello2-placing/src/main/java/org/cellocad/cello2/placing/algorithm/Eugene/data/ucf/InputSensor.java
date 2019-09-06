@@ -36,7 +36,8 @@ import org.json.simple.JSONObject;
 public class InputSensor extends Assignable{
 	
 	private void init() {
-		parts = new CObjectCollection<Part>();
+		this.parameters = new CObjectCollection<Parameter>();
+		this.parts = new CObjectCollection<Part>();
 	}
 	
 	private void parseName(final JSONObject JObj){

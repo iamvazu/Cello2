@@ -18,31 +18,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cellocad.cello2.logicSynthesis.test;
+package org.cellocad.cello2.technologyMapping.algorithm.SimulatedAnnealing.test;
 
-import org.cellocad.cello2.logicSynthesis.netlist.OutputOrTransform;
-import org.cellocad.cello2.results.netlist.Netlist;
+import java.util.List;
+
+import org.cellocad.cello2.common.CObject;
+import org.cellocad.cello2.common.CObjectCollection;
+import org.cellocad.cello2.technologyMapping.algorithm.SimulatedAnnealing.SimulatedAnnealingUtils;
 import org.junit.Test;
 
+import org.junit.Assert;
+
 /**
- *
+ * 
  *
  * @author Timothy Jones
  *
- * @date 2019-05-08
+ * @date 2019-08-13
  *
  */
-public class OutputOrTest {
-	
-	private Netlist netlist() {
-		Netlist rtn = new Netlist();
-		return rtn;
-	}
+public class SimulatedAnnealingUtilsTest {
 
 	@Test
-	public void test() {
-		Netlist netlist = this.netlist();
-		new OutputOrTransform(netlist);
+	public void testGetCObjectsSortedByIdx() {
+		CObject a = new CObject("a",1,3);
+		CObject b = new CObject("b",1,1);
+		CObject c = new CObject("c",1,0);
+		CObject d = new CObject("d",1,2);
+		CObjectCollection<CObject> coll = new CObjectCollection<>();
+		coll.add(a);
+		coll.add(b);
+		coll.add(c);
+		coll.add(d);
+		List<CObject> sorted = SimulatedAnnealingUtils.getCObjectsSortedByIdx(coll);
+		Assert.assertEquals(c, sorted.get(0));
+		Assert.assertEquals(b, sorted.get(1));
+		Assert.assertEquals(d, sorted.get(2));
+		Assert.assertEquals(a, sorted.get(3));
 	}
-
+	
 }

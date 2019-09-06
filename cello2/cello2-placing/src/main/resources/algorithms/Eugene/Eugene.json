@@ -16,11 +16,11 @@
 			"name" : "OverrideGateType",
 			"type" : "boolean",
 			"value": true
-		},
+		}
 		{
-			"name" : "PermutePromoters",
+			"name" : "KeepPromoterOrder",
 			"type" : "boolean",
-			"value": true
+			"value": false
 		}
 	]
 }

@@ -54,17 +54,7 @@ public class InputSensor extends Device{
 		String value = ProfileUtils.getString(JObj, "promoter");
 		this.setPromoter(value);
 	}
-	
-	private void parseLowSignal(final JSONObject JObj){
-		Double value = ((Number)JObj.get("signal_low")).doubleValue();
-		this.setLowSignal(value);
-	}
-	
-	private void parseHighSignal(final JSONObject JObj){
-		Double value = ((Number)JObj.get("signal_high")).doubleValue();
-		this.setHighSignal(value);
-	}
-	
+
 	private void parseParts(final JSONObject jObj, CObjectCollection<Part> parts) {
 		JSONArray jArr = (JSONArray) jObj.get("parts");
 		for (int i = 0; i < jArr.size(); i++) {
@@ -78,8 +68,6 @@ public class InputSensor extends Device{
 		this.parseName(jObj);
 		this.parseUri(jObj);
 		this.parsePromoter(jObj);
-		this.parseLowSignal(jObj);
-		this.parseHighSignal(jObj);
 		this.parseParts(jObj,parts);
 	}
 	
@@ -92,8 +80,6 @@ public class InputSensor extends Device{
 	public boolean isValid() {
 		boolean rtn = super.isValid();
 		rtn = rtn && (this.getPromoter() != null);
-		rtn = rtn && (this.getLowSignal() != null);
-		rtn = rtn && (this.getHighSignal() != null);
 		return rtn;
 	}
 	
@@ -117,48 +103,6 @@ public class InputSensor extends Device{
 	}
 
 	private String promoter;
-	
-	/*
-	 * Low Signal
-	 */
-	/**
-	 * Getter for <i>lowSignal</i>
-	 * @return the lowSignal
-	 */
-	public Double getLowSignal() {
-		return lowSignal;
-	}
-
-	/**
-	 * Setter for <i>lowSignal</i>
-	 * @param promoter the promoter to set
-	 */
-	private void setLowSignal(final Double lowSignal) {
-		this.lowSignal = lowSignal;
-	}
-
-	private Double lowSignal;
-	
-	/*
-	 * High Signal
-	 */
-	/**
-	 * Getter for <i>highSignal</i>
-	 * @return the highSignal
-	 */
-	public Double getHighSignal() {
-		return highSignal;
-	}
-
-	/**
-	 * Setter for <i>highSignal</i>
-	 * @param promoter the promoter to set
-	 */
-	private void setHighSignal(final Double highSignal) {
-		this.highSignal = highSignal;
-	}
-
-	private Double highSignal;
 	
 	/*
 	 * Parts

@@ -18,31 +18,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cellocad.cello2.logicSynthesis.test;
+package org.cellocad.cello2.technologyMapping.algorithm.SimulatedAnnealing.data.rules;
 
-import org.cellocad.cello2.logicSynthesis.netlist.OutputOrTransform;
+import java.util.Collection;
+
 import org.cellocad.cello2.results.netlist.Netlist;
-import org.junit.Test;
 
 /**
  *
  *
  * @author Timothy Jones
  *
- * @date 2019-05-08
+ * @date 2019-09-03
  *
  */
-public class OutputOrTest {
-	
-	private Netlist netlist() {
-		Netlist rtn = new Netlist();
+public class RuleChecker {
+
+	public RuleChecker(Netlist netlist, Collection<String> rules) {
+		this.netlist = netlist;
+	}
+
+	public Boolean check() {
+		Boolean rtn = false;
 		return rtn;
 	}
 
-	@Test
-	public void test() {
-		Netlist netlist = this.netlist();
-		new OutputOrTransform(netlist);
+	/**
+	 * @return the netlist
+	 */
+	private Netlist getNetlist() {
+		return netlist;
 	}
+
+	private Netlist netlist;
 
 }

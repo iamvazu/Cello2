@@ -20,6 +20,8 @@
  */
 package org.cellocad.cello2.placing.algorithm.Eugene;
 
+import java.util.Collection;
+
 import org.cellocad.cello2.common.CObjectCollection;
 import org.cellocad.cello2.placing.algorithm.Eugene.data.Component;
 import org.cellocad.cello2.placing.algorithm.Eugene.data.Device;
@@ -44,50 +46,51 @@ import org.cellocad.cello2.results.netlist.NetlistNode;
  *
  */
 public class EugeneUtils {
-	
-	private static String getGateDeviceName(NetlistNode node,  final CObjectCollection<Gate> gates) {
+
+	private static String getGateDeviceName(NetlistNode node, final CObjectCollection<Gate> gates) {
 		String rtn = "";
 		rtn += getGateBaseName(node, gates);
 		rtn += "_device";
 		return rtn;
 	}
-	
+
 	private static String getGateName(NetlistNode node, final CObjectCollection<Gate> gates) {
 		String rtn = "";
 		rtn += "unit_";
 		rtn += getGateBaseName(node, gates);
 		return rtn;
 	}
-	
+
 	private static String getGateBaseName(final NetlistNode node, final CObjectCollection<Gate> gates) {
 		String rtn = null;
 		String gateType = node.getResultNetlistNodeData().getGateType();
 		if (LSResultsUtils.isPrimaryInput(node)) {
 			rtn = gateType;
-		}
-		else if (LSResultsUtils.isPrimaryOutput(node)) {
+		} else if (LSResultsUtils.isPrimaryOutput(node)) {
 			rtn = gateType;
-		}
-		else if (!LSResultsUtils.isPrimaryInput(node) && !LSResultsUtils.isPrimaryOutput(node)) {
+		} else if (!LSResultsUtils.isPrimaryInput(node) && !LSResultsUtils.isPrimaryOutput(node)) {
 			Gate gate = gates.findCObjectByName(gateType);
 			if (gate == null) {
 				throw new RuntimeException("Unknown gate.");
 			}
 			rtn = gate.getRegulator();
-		}
-		else {
+		} else {
 			throw new RuntimeException("Unknown gateType.");
 		}
 		return rtn;
 	}
 
-	private static CObjectCollection<Part> getInputPromoters(
-			final NetlistNode node,
-			final CObjectCollection<InputSensor> sensors,
-			final CObjectCollection<Gate> gates,
-			final CObjectCollection<Part> parts
-			) {
+	private static CObjectCollection<Part> getInputPromoters(final NetlistNode node,
+			final CObjectCollection<InputSensor> sensors, final CObjectCollection<Gate> gates,
+			final CObjectCollection<Part> parts) {
 		CObjectCollection<Part> rtn = new CObjectCollection<>();
+		Collection<String> partNames = node.getResultNetlistNodeData().getParts();
+		if (partNames.size() > 0) {
+			for (String p : partNames) {
+				Part part = parts.findCObjectByName(p);
+				rtn.add(part);
+			}
+		}
 		for (int i = 0; i < node.getNumInEdge(); i++) {
 			NetlistEdge e = node.getInEdgeAtIdx(i);
 			NetlistNode src = e.getSrc();
@@ -109,8 +112,7 @@ public class EugeneUtils {
 		return rtn;
 	}
 
-	private static CObjectCollection<Part> getInputSensorParts(
-			final NetlistNode node,
+	private static CObjectCollection<Part> getInputSensorParts(final NetlistNode node,
 			final CObjectCollection<InputSensor> sensors) {
 		CObjectCollection<Part> rtn = new CObjectCollection<>();
 		String gateType = node.getResultNetlistNodeData().getGateType();
@@ -128,10 +130,8 @@ public class EugeneUtils {
 		return rtn;
 	}
 
-	private static CObjectCollection<Part> getOutputReporterParts(
-			final NetlistNode node,
-			final CObjectCollection<OutputReporter> reporters
-			) {
+	private static CObjectCollection<Part> getOutputReporterParts(final NetlistNode node,
+			final CObjectCollection<OutputReporter> reporters) {
 		CObjectCollection<Part> rtn = new CObjectCollection<>();
 		String gateType = node.getResultNetlistNodeData().getGateType();
 		OutputReporter reporter = reporters.findCObjectByName(gateType);
@@ -148,10 +148,8 @@ public class EugeneUtils {
 		return rtn;
 	}
 
-	private static CObjectCollection<Part> getCasetteParts(
-			final NetlistNode node,
-			final CObjectCollection<Gate> gates
-			) {
+	private static CObjectCollection<Part> getCasetteParts(final NetlistNode node,
+			final CObjectCollection<Gate> gates) {
 		CObjectCollection<Part> rtn = new CObjectCollection<>();
 		String gateType = node.getResultNetlistNodeData().getGateType();
 		Gate gate = gates.findCObjectByName(gateType);
@@ -174,46 +172,39 @@ public class EugeneUtils {
 		return rtn;
 	}
 
-	static Devices getDevices(
-			final NetlistNode node,
-			final CObjectCollection<InputSensor> sensors,
-			final CObjectCollection<OutputReporter> reporters,
-			final CObjectCollection<Gate> gates,
-			final CObjectCollection<Part> parts,
-			final Boolean bSplit
-			) {
+	static Devices getDevices(final NetlistNode node, final CObjectCollection<InputSensor> sensors,
+			final CObjectCollection<OutputReporter> reporters, final CObjectCollection<Gate> gates,
+			final CObjectCollection<Part> parts, final Boolean bSplit) {
 		Devices rtn = null;
 		CObjectCollection<Device> devices = new CObjectCollection<>();
-		String name = getGateDeviceName(node,gates);
+		String name = getGateDeviceName(node, gates);
 		if (LSResultsUtils.isPrimaryInput(node)) {
 			CObjectCollection<Component> components = new CObjectCollection<>();
 			Device device = new Device(components);
 			// cassette parts
 			CObjectCollection<Component> componentParts = new CObjectCollection<>();
-			componentParts.addAll(getInputSensorParts(node,sensors));
+			componentParts.addAll(getInputSensorParts(node, sensors));
 			Device sensor = new Device(componentParts);
 			sensor.setName(node.getResultNetlistNodeData().getGateType());
 			components.add(sensor);
 			device.setName(name);
 			devices.add(device);
-		}
-		else if (LSResultsUtils.isPrimaryOutput(node)) {
+		} else if (LSResultsUtils.isPrimaryOutput(node)) {
 			CObjectCollection<Component> components = new CObjectCollection<>();
 			Device device = new Device(components);
 			// input promoters
-			components.addAll(getInputPromoters(node,sensors,gates,parts));
+			components.addAll(getInputPromoters(node, sensors, gates, parts));
 			// cassette parts
 			CObjectCollection<Component> componentParts = new CObjectCollection<>();
-			componentParts.addAll(getOutputReporterParts(node,reporters));
+			componentParts.addAll(getOutputReporterParts(node, reporters));
 			Device reporter = new Device(componentParts);
 			reporter.setName(node.getResultNetlistNodeData().getGateType());
 			components.add(reporter);
 			device.setName(name);
 			devices.add(device);
-		}
-		else if (!LSResultsUtils.isAllInput(node) && !LSResultsUtils.isAllOutput(node)) {
-			CObjectCollection<Part> inputPromoters = getInputPromoters(node,sensors,gates,parts);
-			CObjectCollection<Part> cassetteParts = getCasetteParts(node,gates);
+		} else if (!LSResultsUtils.isAllInput(node) && !LSResultsUtils.isAllOutput(node)) {
+			CObjectCollection<Part> inputPromoters = getInputPromoters(node, sensors, gates, parts);
+			CObjectCollection<Part> cassetteParts = getCasetteParts(node, gates);
 			if (bSplit) {
 				int i = 0;
 				for (Part promoter : inputPromoters) {

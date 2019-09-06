@@ -178,15 +178,13 @@ public class Main {
 		// Dot2Pdf.dot2pdf(loDotFile);
 		// Main.getLogger().info(LOResultsStats.getLogicOptimizationStats(netlist));
 		// clustering
-		// currentStage = appCfg.getStageByName("clustering");
-		// CLRuntimeObject CL = new CLRuntimeObject(currentStage, td, netlistConstraint,
-		// netlist, runEnv);
-		// CL.execute();
+		//currentStage = appCfg.getStageByName("clustering");
+		//CLRuntimeObject CL = new CLRuntimeObject(currentStage, td, netlistConstraint, netlist, runEnv);
+		//CL.execute();
 		// partitioning
-		// currentStage = appCfg.getStageByName("partitioning");
-		// PTRuntimeObject PT = new PTRuntimeObject(currentStage, td, netlistConstraint,
-		// netlist, runEnv);
-		// PT.execute();
+		//currentStage = appCfg.getStageByName("partitioning");
+		//PTRuntimeObject PT = new PTRuntimeObject(currentStage, td, netlistConstraint, netlist, runEnv);
+		//PT.execute();
 		Main.printPartitioningGraphs(runEnv, netlist);
 		Main.getLogger().info(PTResultsStats.getPartitioningStats(netlist));
 		netlist = new PTBlockNetlist(netlist).getVirtualLargeNetlistFO();
